@@ -13,21 +13,19 @@ class App {
     this.initializeVariables(); // 변수 초기화
     this.printGameStart(); // 게임 시작 프린트
     this.generateComputerInput(); // 컴퓨터 랜덤 함수 생성
-    while (this.receiveUserInput()) {
-      await this.receiveUserInput(); // 유저 값 받기
-      if (this.validateUserInput()) {
-        this.getStrikeAndBallCount(); // 스트라이크 볼 겟수 세기
-        this.printStrikeAndBallResult(); // 스트라이크 볼 겟수 프린트
-        if (this.printThreeStrikeGameEndMessage()) {
-          await this.prcessGameRestartOrExit(); // 프로그램 종료
-        }
+    await this.receiveUserInput(); // 유저 값 받기
+    if (this.validateUserInput()) {
+      this.getStrikeAndBallCount(); // 스트라이크 볼 겟수 세기
+      this.printStrikeAndBallResult(); // 스트라이크 볼 겟수 프린트
+      if (this.printThreeStrikeGameEndMessage()) {
+        await this.prcessGameRestartOrExit(); // 프로그램 종료
       }
     }
-    return;
   }
+    
 
   printGameStart() {
-    Console.print('숫자 야구 게임을 시작합니다. 커밋해보기');
+    Console.print('숫자 야구 게임을 시작합니다. ');
   }
 
   generateComputerInput() {
