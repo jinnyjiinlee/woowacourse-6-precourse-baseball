@@ -5,25 +5,31 @@ class App {
     this.computerInputDigits = [];
     this.userInputDigits = '';
     this.randomedNumber = '';
-    this.strike = '';
-    this.ball = '';
+    this.strikeCount = '';
+    this.ballCount = '';
   }
 
   async play() {
-    this.initializeVariables(); // 변수 초기화
     this.printGameStart(); // 게임 시작 프린트
+    this.computuerDigitsInitializeVariables();
     this.generateComputerInput(); // 컴퓨터 랜덤 함수 생성
-    await this.receiveUserInput(); // 유저 값 받기
-    if (this.validateUserInput()) {
-      this.getStrikeAndBallCount(); // 스트라이크 볼 겟수 세기
-      this.printStrikeAndBallResult(); // 스트라이크 볼 겟수 프린트
-      if (this.printThreeStrikeGameEndMessage()) {
-        await this.prcessGameRestartOrExit(); // 프로그램 종료
+    // Console.print(this.printThreestrikeCountGameEndMessage());
+
+    while (this.strikeCount !== 3) {
+      await this.receiveUserInput(); // 유저 값 받기
+      this.userDigitinitializeVariables();
+      if (this.validateUserInput() === true) {
+        this.getstrikeCountAndBallCount(); // 스트라이크 볼 갯수 - 세기
+        this.printstrikeCountAndBallResult(); // 스트라이크 볼 갯수 - 프린트
+        this.printThreestrikeCountGameEndMessage();
+        // Console.print(this.printThreestrikeCountGameEndMessage());
       }
     }
+    this.strikeCount = '';
+    await this.prcessGameRestartOrExit(); // 프로그램 종료
   }
-    
 
+  
   printGameStart() {
     Console.print('숫자 야구 게임을 시작합니다. ');
   }
@@ -35,6 +41,7 @@ class App {
         this.computerInputDigits.push(this.randomedNumber);
       }
     }
+    Console.print('컴퓨터 숫자 ' + this.computerInputDigits);
   }
 
   async receiveUserInput() {
@@ -51,45 +58,48 @@ class App {
     return true;
   }
 
-  initializeVariables() {
+  computuerDigitsInitializeVariables() {
     this.computerInputDigits.length = 0;
-    this.strike = 0;
-    this.ball = 0;
   }
 
-  getStrikeAndBallCount() {
+  userDigitinitializeVariables() {
+    this.strikeCount = 0;
+    this.ballCount = 0;
+  }
+
+  getstrikeCountAndBallCount() {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (Number(this.userInputDigits[i]) === this.computerInputDigits[j]) {
           if (i === j) {
-            this.strike += 1;
+            this.strikeCount += 1;
           }
           if (i !== j) {
-            this.ball += 1;
+            this.ballCount += 1;
           }
         }
       }
     }
   }
 
-  printStrikeAndBallResult() {
+  printstrikeCountAndBallResult() {
     // 스트라이크 볼 결과 프린트
-    if (this.strike === 0 && this.ball === 0) {
+    if (this.strikeCount === 0 && this.ballCount === 0) {
       Console.print('낫싱');
     }
-    if (this.strike > 0 && this.strike < 3 && this.ball === 0) {
-      Console.print(`${this.strike}스트라이크`);
+    if (this.strikeCount > 0 && this.strikeCount < 3 && this.ballCount === 0) {
+      Console.print(`${this.strikeCount}스트라이크`);
     }
-    if (this.strike === 0 && this.ball > 0) {
-      Console.print(`${this.ball}볼`);
+    if (this.strikeCount === 0 && this.ballCount > 0) {
+      Console.print(`${this.ballCount}볼`);
     }
-    if (this.strike > 0 && this.ball > 0) {
-      Console.print(`${this.ball}볼 ${this.strike}스트라이크`);
+    if (this.strikeCount > 0 && this.ballCount > 0) {
+      Console.print(`${this.ballCount}볼 ${this.strikeCount}스트라이크`);
     }
   }
 
-  printThreeStrikeGameEndMessage() {
-    if (this.strike === 3) {
+  printThreestrikeCountGameEndMessage() {
+    if (this.strikeCount === 3) {
       Console.print('3스트라이크');
       Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
     }
@@ -97,7 +107,7 @@ class App {
   }
 
   async prcessGameRestartOrExit() {
-    this.userChoice = await Console.readLineAsync('게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.');
+    this.userChoice = await Console.readLineAsync('게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요. : ');
     if (this.userChoice === '1') {
       await this.play(); // 게임 재시작
     }
