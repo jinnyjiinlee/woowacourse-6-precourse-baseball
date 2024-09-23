@@ -29,7 +29,6 @@ class App {
     await this.prcessGameRestartOrExit(); // 프로그램 종료
   }
 
-  
   printGameStart() {
     Console.print('숫자 야구 게임을 시작합니다. ');
   }
