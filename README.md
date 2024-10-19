@@ -1,6 +1,7 @@
 # javascript-calculator-precourse
 
 안녕하세요. 우아한테크코스 7기 프론트엔드 지원자 이지인입니다.
+이건 테스트입니다. 
 
 # 미션 - 숫자 야구
 
